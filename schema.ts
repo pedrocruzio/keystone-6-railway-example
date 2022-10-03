@@ -25,7 +25,7 @@ export const lists = {
     fields: {
       caption: text({ isRequired: false }),
       isDraft: checkbox(),
-      author: relationship({ ref: 'Person.posts', many: false }),
+      author: text({ isRequired: false }),
       posted: timestamp(),
       images: relationship({ ref: 'Image', many: true }),
     },
