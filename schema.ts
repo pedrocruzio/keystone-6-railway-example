@@ -2,7 +2,7 @@
 // See.. https://github.com/keystonejs/keystone/tree/master/examples/with-auth
 
 import { list } from '@keystone-6/core';
-import { checkbox, password, relationship, text, timestamp, select } from '@keystone-6/core/fields';
+import { checkbox, password, relationship, text, timestamp, select, image } from '@keystone-6/core/fields';
 
 export const lists = {
   Task: list({
@@ -21,6 +21,15 @@ export const lists = {
       finishBy: timestamp(),
     },
   }),
+  Post: list({
+    fields: {
+      caption: text({ isRequired: false }),
+      isDraft: checkbox(),
+      author: relationship({ ref: 'Person.posts', many: false }),
+      posted: timestamp(),
+      images: relationship({ ref: 'Image', many: true }),
+    },
+  }),
   Person: list({
     fields: {
       name: text({ isRequired: true }),
@@ -34,5 +43,16 @@ export const lists = {
       password: password({ isRequired: true }),
       tasks: relationship({ ref: 'Task.assignedTo', many: true }),
     },
+  }),
+  Image: list({
+    fields: {
+	  name: text({
+		  validation: {
+	    isRequired: true,
+		  },
+	  }),
+	  altText: text(),
+	  image: image({ storage: 'my_local_images' }),
+    }
   }),
 };
